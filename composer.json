@@ -1,0 +1,27 @@
+{
+    "name": "reinink/advanced-eloquent",
+    "type": "library",
+    "description": "A set of advanced Eloquent macros for Laravel",
+    "keywords": ["laravel", "advanced", "eloquent", "macro"],
+    "homepage": "https://github.com/reinink/advanced-eloquent",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonathan Reinink",
+            "email": "jonathan@reinink.ca",
+            "homepage": "https://reinink.ca"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AdvancedEloquent\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AdvancedEloquent\\ServiceProvider"
+            ]
+        }
+    }
+}
