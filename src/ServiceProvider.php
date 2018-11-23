@@ -18,27 +18,27 @@ class ServiceProvider extends BaseServiceProvider
             return $this->selectSub($query->limit(1), $column);
         });
 
-        Builder::macro('orderBySub', function ($query, $direction = 'asc', $nullDirection = null) {
+        Builder::macro('orderBySub', function ($query, $direction = 'asc', $nullPosition = null) {
             if (!in_array($direction, ['asc', 'desc'])) {
                 throw new Exception('Not a valid direction.');
             }
 
-            if (!in_array($nullDirection, [null, 'first', 'last'], true)) {
-                throw new Exception('Not a valid null direction.');
+            if (!in_array($nullPosition, [null, 'first', 'last'], true)) {
+                throw new Exception('Not a valid null position.');
             }
 
             return $this->orderByRaw(
-                implode('', ['(', $query->limit(1)->toSql(), ') ', $direction, $nullDirection ? ' NULLS '.strtoupper($nullDirection) : null]),
+                implode('', ['(', $query->limit(1)->toSql(), ') ', $direction, $nullPosition ? ' NULLS '.strtoupper($nullPosition) : null]),
                 $query->getBindings()
             );
         });
 
-        Builder::macro('orderBySubAsc', function ($query, $nullDirection = null) {
-            return $this->orderBySub($query, 'asc', $nullDirection);
+        Builder::macro('orderBySubAsc', function ($query, $nullPosition = null) {
+            return $this->orderBySub($query, 'asc', $nullPosition);
         });
 
-        Builder::macro('orderBySubDesc', function ($query, $nullDirection = null) {
-            return $this->orderBySub($query, 'desc', $nullDirection);
+        Builder::macro('orderBySubDesc', function ($query, $nullPosition = null) {
+            return $this->orderBySub($query, 'desc', $nullPosition);
         });
     }
 }

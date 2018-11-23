@@ -19,23 +19,23 @@ This package uses auto-discovery, so there is no further configuration required.
 - `$column` must be a string.
 - `$query` must either be an instance of `Illuminate\Database\Query\Builder` or `Illuminate\Database\Eloquent\Builder`.
 
-### `orderBySub($query, $direction = 'asc', $nullDirection = null)`
+### `orderBySub($query, $direction = 'asc', $nullPosition = null)`
 
 - `$query` must either be an instance of `Illuminate\Database\Query\Builder` or `Illuminate\Database\Eloquent\Builder`.
 - `$direction` must either be `'asc'` or `'desc'`.
-- `$nullDirection` must either be `null`, `'first'` or `'last'`.
+- `$nullPosition` must either be `null`, `'first'` or `'last'`.
 
-### `orderBySubAsc($query, $nullDirection = null)`
-
-- `$query` must either be an instance of `Illuminate\Database\Query\Builder` or `Illuminate\Database\Eloquent\Builder`.
-- `$nullDirection` must either be `null`, `'first'` or `'last'`.
-
-### `orderBySubDesc($query, $nullDirection = null)`
+### `orderBySubAsc($query, $nullPosition = null)`
 
 - `$query` must either be an instance of `Illuminate\Database\Query\Builder` or `Illuminate\Database\Eloquent\Builder`.
-- `$nullDirection` must either be `null`, `'first'` or `'last'`.
+- `$nullPosition` must either be `null`, `'first'` or `'last'`.
 
-*Note: Null directions are not supported on all databases, including MySQL and SQLite. It is, however, supported by PostgreSQL and others.*
+### `orderBySubDesc($query, $nullPosition = null)`
+
+- `$query` must either be an instance of `Illuminate\Database\Query\Builder` or `Illuminate\Database\Eloquent\Builder`.
+- `$nullPosition` must either be `null`, `'first'` or `'last'`.
+
+*Note: Null positions (`NULLS FIRST` and `NULLS LAST`) are not supported by all databases (ie. MySQL and SQLite), but are supported by PostgreSQL and others.*
 
 ## Examples
 
