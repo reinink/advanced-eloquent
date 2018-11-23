@@ -2,7 +2,7 @@
 
 namespace AdvancedEloquent;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class ServiceProvider extends BaseServiceProvider
@@ -10,8 +10,8 @@ class ServiceProvider extends BaseServiceProvider
     public function boot()
     {
         Builder::macro('addSubSelect', function ($column, $query) {
-            if (is_null($this->getQuery()->columns)) {
-                $this->select($this->getQuery()->from.'.*');
+            if (is_null($this->columns)) {
+                $this->select($this->from.'.*');
             }
 
             return $this->selectSub($query->limit(1), $column);
