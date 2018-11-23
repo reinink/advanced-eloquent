@@ -14,11 +14,28 @@ This package uses auto-discovery, so there is no further configuration required.
 
 ## API
 
-This package currently provides three `Eloquent\Builder` macros for working with subqueries in Laravel.
+### `addSubSelect($column,  $query)`
 
-- `addSubSelect($column, $query)`
-- `orderBySub($query, $direction = 'asc', $bindings = [])`
-- `orderBySubDesc($query, $bindings = [])`
+- `$column` must be a string.
+- `$query` must either be an instance of `Illuminate\Database\Query\Builder` or `Illuminate\Database\Eloquent\Builder`.
+
+### `orderBySub($query, $direction = 'asc', $nullDirection = null)`
+
+- `$query` must either be an instance of `Illuminate\Database\Query\Builder` or `Illuminate\Database\Eloquent\Builder`.
+- `$direction` must either be `'asc'` or `'desc'`.
+- `$nullDirection` must either be `null`, `'first'` or `'last'`.
+
+### `orderBySubAsc($query, $nullDirection = null)`
+
+- `$query` must either be an instance of `Illuminate\Database\Query\Builder` or `Illuminate\Database\Eloquent\Builder`.
+- `$nullDirection` must either be `null`, `'first'` or `'last'`.
+
+### `orderBySubDesc($query, $nullDirection = null)`
+
+- `$query` must either be an instance of `Illuminate\Database\Query\Builder` or `Illuminate\Database\Eloquent\Builder`.
+- `$nullDirection` must either be `null`, `'first'` or `'last'`.
+
+*Note: Null directions are not supported on all databases, including MySQL and SQLite. It is, however, supported by PostgreSQL and others.*
 
 ## Examples
 
@@ -31,8 +48,30 @@ $users = User::addSubSelect('last_login_at', Login::select('created_at')
 )->get();
 ```
 
+Same example as above, except using the query builder instead:
+
+```php
+$users = DB::table('users')->addSubSelect('last_login_at', DB::table('logins')
+    ->select('created_at')
+    ->whereColumn('user_id', 'users.id')
+    ->latest()
+)->get()
+```
+
 Order users by their company name using a subquery:
 
 ```php
 $users = User::orderBySub(Company::select('name')->whereColumn('company_id', 'companies.id'))->get();
+```
+
+Order users by their last login date, with null values last:
+
+```php
+$users = User::addSubSelect('last_login_at', Login::select('created_at')
+        ->whereColumn('user_id', 'users.id')
+        ->latest()
+    )->orderBySubDesc(Login::select('created_at')
+        ->whereColumn('user_id', 'users.id')
+        ->latest(), 'last'
+    )->get();
 ```
