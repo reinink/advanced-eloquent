@@ -2,6 +2,8 @@
 
 A set of advanced Eloquent macros for Laravel.
 
+> ⚠️ Note, I've brought much of the functionality provided by this package to Laravel core, in particular the subquery functionality, which has pretty much made this package obsolete. If you want to learn more about these features, be sure to see my [Eloquent Peformance Patterns](https://eloquent-course.reinink.ca/) course, which covers these techniques and others in detail.
+
 ## Installation
 
 You can install this package via Composer:
